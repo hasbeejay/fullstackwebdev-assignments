@@ -44,7 +44,7 @@ const ASSIGNMENTS = [
     ],
     outcome: 'A full-stack chat application with real-time communication. Update this outcome to match the final submission.',
     tech: ['HTML5', 'CSS3', 'Bootstrap', 'JavaScript'],
-    liveUrl: '',
+    liveUrl: 'Assignment 1/ConnecFriend/index.html',
     date: '',
     status: 'In Progress',
     colors: ['#5ac8fa', '#0a84ff'],
