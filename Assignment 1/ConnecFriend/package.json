@@ -1,0 +1,16 @@
+{
+  "name": "connecfriend-relay",
+  "version": "1.0.0",
+  "description": "Optional local WebSocket relay for the ConnecFriend classroom demo (CS 301, Assignment 1).",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

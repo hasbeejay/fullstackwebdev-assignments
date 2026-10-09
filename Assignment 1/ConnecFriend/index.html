@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ConnecFriend</title>
+  <meta name="description" content="ConnecFriend — Aesthetic social network with always-live real-time chat, glassmorphic UI, and friendship connections.">
+  <meta name="theme-color" content="#0a0d18">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%236366f1'/%3E%3Ccircle cx='12' cy='16' r='5' fill='none' stroke='white' stroke-width='3'/%3E%3Ccircle cx='21' cy='16' r='5' fill='none' stroke='white' stroke-width='3' opacity='.8'/%3E%3C/svg%3E">
+  
+  <!-- Immediate theme check to prevent flickering -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('connecfriend.theme');
+        var theme = (saved === 'light' || saved === 'dark') ? saved : 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Local Vendor CSS -->
+  <link rel="stylesheet" href="assets/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/vendor/bootstrap-icons.min.css">
+  <!-- Aesthetic Glassmorphism Design System -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="visually-hidden-focusable cf-skip" href="#view">Skip to main content</a>
+
+  <!-- Ambient Floating Glow Mesh Orbs in Background -->
+  <div class="cf-bg-decor" aria-hidden="true">
+    <div class="cf-orb cf-orb-1"></div>
+    <div class="cf-orb cf-orb-2"></div>
+    <div class="cf-orb cf-orb-3"></div>
+  </div>
+
+  <noscript><div class="alert alert-warning m-3">ConnecFriend needs JavaScript to run.</div></noscript>
+
+  <!-- ===== Login View ===== -->
+  <div id="login-view" class="cf-login" hidden>
+    <div class="cf-login-brand">
+      <div class="d-inline-flex align-items-center gap-3">
+        <div class="cf-logo cf-logo-lg" aria-hidden="true"><i class="bi bi-link-45deg"></i></div>
+        <span class="badge rounded-pill px-3 py-2" style="background: rgba(99,102,241,0.18); border: 1px solid rgba(129,140,248,0.3); color:#c7d2fe;">
+          <i class="bi bi-sparkles me-1 text-warning"></i> Next-Gen Social
+        </span>
+      </div>
+      <h1 class="cf-wordmark">ConnecFriend</h1>
+      <p class="cf-login-tagline">Stay close to your favorite people with an aesthetic, private, and always-live space.</p>
+      <ul class="cf-login-points list-unstyled">
+        <li><i class="bi bi-broadcast" aria-hidden="true"></i> <div><strong>Always-Live Chat</strong> — Instant real-time messaging with live delivery</div></li>
+        <li><i class="bi bi-shield-check" aria-hidden="true"></i> <div><strong>Audience Circles</strong> — Share posts with all or handpicked friends</div></li>
+        <li><i class="bi bi-stars" aria-hidden="true"></i> <div><strong>Friend Ratings</strong> — Rate friends (Cool, Trustworthy, Stupid) & manage invites</div></li>
+      </ul>
+    </div>
+    <div class="cf-login-panel position-relative">
+      <!-- Floating Theme Switcher on Login Screen -->
+      <div class="position-absolute top-0 end-0 p-3">
+        <button class="btn cf-theme-btn" data-action="toggle-theme" type="button" aria-label="Toggle theme" title="Toggle theme">
+          <i class="bi bi-sun-fill cf-sun-icon" aria-hidden="true"></i>
+          <i class="bi bi-moon-stars-fill cf-moon-icon" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <form id="login-form" class="cf-card cf-glass-card cf-login-card" novalidate>
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <h2 class="h4 mb-0">Welcome back</h2>
+          <span class="cf-live-pill is-live" style="font-size:0.75rem;"><i class="bi bi-lightning-charge-fill text-warning me-1"></i> Live Ready</span>
+        </div>
+        <p class="text-muted small mb-4">Select a demo member below or enter credentials.</p>
+
+        <div id="login-alert" class="alert alert-danger d-none" role="alert"></div>
+
+        <div class="mb-3">
+          <label for="login-username" class="form-label text-light small fw-semibold">Username</label>
+          <input id="login-username" name="username" class="form-control form-control-lg" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="e.g. haseeb" required>
+          <div class="invalid-feedback">Please enter your username.</div>
+        </div>
+        <div class="mb-4">
+          <label for="login-password" class="form-label text-light small fw-semibold">Password</label>
+          <div class="input-group input-group-lg has-validation">
+            <input id="login-password" name="password" class="form-control" type="password" autocomplete="current-password" placeholder="••••••••" required>
+            <button class="btn btn-outline-secondary" type="button" id="toggle-password" aria-label="Show password" aria-pressed="false"><i class="bi bi-eye" aria-hidden="true"></i></button>
+            <div class="invalid-feedback">Please enter your password.</div>
+          </div>
+        </div>
+        <button id="login-submit" class="btn btn-primary btn-lg w-100" type="submit">
+          <span class="spinner-border spinner-border-sm me-2 d-none" aria-hidden="true"></span>
+          <span class="label">Sign in</span>
+          <i class="bi bi-arrow-right ms-1"></i>
+        </button>
+
+        <details class="cf-demo-helper mt-4" open>
+          <summary class="text-light-emphasis small fw-semibold">⚡ Quick Demo Accounts <span class="text-muted">(demo123)</span></summary>
+          <div class="cf-demo-chips" id="demo-accounts"></div>
+          <p class="small text-muted mb-0 mt-3" style="font-size:0.8rem;">Click any chip above to instant-fill credentials.</p>
+        </details>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== Application Shell ===== -->
+  <div id="app-shell" hidden>
+    <header class="cf-topbar">
+      <a class="cf-brand" href="#/home" aria-label="ConnecFriend home">
+        <span class="cf-logo" aria-hidden="true"><i class="bi bi-link-45deg"></i></span>
+        <span class="cf-brand-name">ConnecFriend</span>
+      </a>
+
+      <!-- Real-Time Live Status Pill -->
+      <span class="cf-live-pill d-none d-md-inline-flex" data-live-status title="Real-time WebSocket & bus synchronization"></span>
+
+      <!-- Theme Switcher Button -->
+      <button class="btn cf-theme-btn ms-auto" id="theme-toggle" data-action="toggle-theme" type="button" aria-label="Toggle light/dark theme" title="Toggle theme">
+        <i class="bi bi-sun-fill cf-sun-icon" aria-hidden="true"></i>
+        <i class="bi bi-moon-stars-fill cf-moon-icon" aria-hidden="true"></i>
+      </button>
+
+      <div class="dropdown">
+        <button class="btn cf-user-btn" type="button" id="user-menu" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Account menu">
+          <span id="topbar-avatar"></span>
+          <span class="d-none d-sm-inline" id="topbar-name"></span>
+          <i class="bi bi-chevron-down small text-muted ms-1" aria-hidden="true"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end shadow-lg" aria-labelledby="user-menu">
+          <li><a class="dropdown-item" id="menu-profile" href="#/profile"><i class="bi bi-person me-2 text-primary" aria-hidden="true"></i>My profile</a></li>
+          <li><button class="dropdown-item" type="button" data-action="toggle-theme"><i class="bi bi-circle-half me-2 text-warning" aria-hidden="true"></i>Toggle theme</button></li>
+          <li><a class="dropdown-item" href="#/settings"><i class="bi bi-gear me-2 text-primary" aria-hidden="true"></i>Settings</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><button class="dropdown-item text-danger" type="button" data-action="logout"><i class="bi bi-box-arrow-right me-2" aria-hidden="true"></i>Log out</button></li>
+        </ul>
+      </div>
+    </header>
+
+    <div class="cf-layout">
+      <!-- Desktop Sidebar -->
+      <nav class="cf-sidebar d-none d-lg-flex" aria-label="Main">
+        <a class="cf-nav-link" href="#/home" data-route="home"><i class="bi bi-house" aria-hidden="true"></i><span>Home Feed</span></a>
+        <a class="cf-nav-link" href="#/friends" data-route="friends"><i class="bi bi-people" aria-hidden="true"></i><span>Friends</span></a>
+        <a class="cf-nav-link" href="#/invitations" data-route="invitations"><i class="bi bi-person-plus" aria-hidden="true"></i><span>Invitations</span><span class="badge cf-badge" data-badge="invites" hidden></span></a>
+        <a class="cf-nav-link" href="#/discover" data-route="discover"><i class="bi bi-compass" aria-hidden="true"></i><span>Discover</span></a>
+        <a class="cf-nav-link" href="#/messages" data-route="messages"><i class="bi bi-chat-dots" aria-hidden="true"></i><span>Live Chat</span><span class="badge cf-badge" data-badge="messages" hidden></span></a>
+        <a class="cf-nav-link" href="#/settings" data-route="settings"><i class="bi bi-gear" aria-hidden="true"></i><span>Settings</span></a>
+        <a class="cf-nav-link mt-auto" id="sidebar-profile" href="#/profile" data-route="profile"><i class="bi bi-person-badge" aria-hidden="true"></i><span>My Profile</span></a>
+      </nav>
+
+      <!-- Main Route Outlet -->
+      <main id="view" class="cf-main" tabindex="-1"></main>
+    </div>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="cf-bottomnav d-lg-none" aria-label="Main">
+      <a href="#/home" data-route="home"><i class="bi bi-house" aria-hidden="true"></i><span>Home</span></a>
+      <a href="#/friends" data-route="friends"><i class="bi bi-people" aria-hidden="true"></i><span>Friends</span></a>
+      <a href="#/discover" data-route="discover"><i class="bi bi-compass" aria-hidden="true"></i><span>Discover</span></a>
+      <a href="#/invitations" data-route="invitations"><i class="bi bi-person-plus" aria-hidden="true"></i><span>Invites</span><span class="badge cf-badge" data-badge="invites" hidden></span></a>
+      <a href="#/messages" data-route="messages"><i class="bi bi-chat-dots" aria-hidden="true"></i><span>Chat</span><span class="badge cf-badge" data-badge="messages" hidden></span></a>
+    </nav>
+  </div>
+
+  <!-- Notification Toast Container -->
+  <div id="toast-container" class="toast-container position-fixed top-0 end-0 p-3" aria-live="polite"></div>
+
+  <!-- Vendor & Application Scripts -->
+  <script src="assets/vendor/bootstrap.bundle.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/friends.js"></script>
+  <script src="js/feed.js"></script>
+  <script src="js/messaging.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
